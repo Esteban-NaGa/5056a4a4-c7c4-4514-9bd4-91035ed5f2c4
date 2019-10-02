@@ -12,14 +12,14 @@ class Main(object):
     @staticmethod
     def annuity(amount, interest, n):
         amortization = Amortization(amount, interest, n)
-        return amortization.annuity()
+        return amortization.annuity
 
     def table(self, amount, interest, n, rows=10, save=""):
-        amortization= Amortization(amount, interest, n)
-        table = amortization.get_table()
-        print(table.head(rows))
+        amortization = Amortization(amount,interest,n)
+        df = amortization.get_table()
+        print(df)
         if save:
-            table.to_csv(save)
+            df.to_csv(save)
 
     def graph(self, amount, interest, n, save=""):
         amortization = Amortization(amount, interest, n)
