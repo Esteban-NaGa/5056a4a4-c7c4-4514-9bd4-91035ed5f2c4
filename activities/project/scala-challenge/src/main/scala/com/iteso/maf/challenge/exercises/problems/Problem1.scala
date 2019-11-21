@@ -42,6 +42,7 @@ case object Problem1 extends Problem {
         (first, second) => {
           val challengeSolution: MixedString = {
             // <---- Your code starts here. --->
+            1 + 5
             ???
             // <---- Your code ends  here. ---->
           }
