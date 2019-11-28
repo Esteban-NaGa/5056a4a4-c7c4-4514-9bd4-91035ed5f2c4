@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS student (
     gender TEXT,
     gpa NUMERIC,
     age INT,
-    PRIMARY KEY (id)
+    PRIMARY KEY (i)
 );
 
 -- Create course table
