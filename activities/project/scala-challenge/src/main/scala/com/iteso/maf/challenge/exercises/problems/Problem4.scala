@@ -55,16 +55,43 @@ case object Problem4 extends Problem {
 
           // A) Implicit class here with:
           // def asInt: Option[Int] = ???
-          ???
+          implicit class StringOps(x: String){
+            def asInt: Option[Int] = {
+              try {Some(x.toInt)}
+              catch { case _: Throwable => None}
+            }
+          }
 
           // B) Implement the calculate method.
           // def calculate(ops: String, a: Int, b: Int): Option[Int] = ???
-          def calculate(ops: String, a: Int, b: Int): Option[Int] = ???
-
+          def calculate(ops: String, a: Int, b: Int): Option[Int] =
+            ops match {
+              case "sum" => Some(a+b)
+              case "subtraction" => Some(a-b)
+              case "multiplication" => Some(a*b)
+              case "division" => try {Some(a/b)}
+              catch { case _: Throwable => None}
+              case _ => None
+            }
           // C) Complete the challenge response variable.
           // val challengeResponse: Option[Calculation] = ???
-          val challengeResponse: Option[Calculation] = ???
 
+          val optA: Option[Int] = params.get("a").flatMap(a => a.asInt)
+
+          val optB: Option[Int] = params.get("b").flatMap(b => b.asInt)
+
+          val optOp: Option[String] = params.get("operation")
+
+          //val res: Option[Calculation] = optOp.flatMap(op => optA.flatMap(a => optB.flatMap(b => calculate(op, a, b).map(c => Calculation(op, a, b, c)))))
+
+          val res = for {
+            a <- optA
+            b <- optB
+            op <- optOp
+            c <- calculate(op, a, b)
+          } yield Calculation(op, a, b, c)
+
+          val challengeResponse: Option[Calculation] = res
           // <---- Your code ends  here. ---->
           challengeResponse match {
             case None => badRequestResponse
